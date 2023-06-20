@@ -36,9 +36,17 @@ namespace WebApplication1.Controllers
 
         public IActionResult DeleteRecord(int id)
         {
-            Console.WriteLine(id);
-            _userService.delete(id);
-            return Redirect("/");
+            try
+            {
+                Console.WriteLine(id);
+                _userService.delete(id);
+                return Redirect("/");
+
+            }
+            catch (Exception e)
+            {
+                return Redirect("/");
+            }
         }
 
         [HttpPost("/Home/add")]
@@ -49,9 +57,7 @@ namespace WebApplication1.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    List<User> users = _userService.get();
-                    ViewBag.Users = users.ToList();
-                    return View("~/Views/CRUD/AddUser.cshtml", userAddDTO);
+                    throw new Exception("");
                 }
                 User user = new User() { UserName = userAddDTO.UserName, Address = userAddDTO.Address };
                 
@@ -62,7 +68,10 @@ namespace WebApplication1.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                List<User> users = _userService.get();
+                ViewBag.Users = users.ToList();
+                return View("~/Views/CRUD/AddUser.cshtml", userAddDTO);
+
             }
 
 
