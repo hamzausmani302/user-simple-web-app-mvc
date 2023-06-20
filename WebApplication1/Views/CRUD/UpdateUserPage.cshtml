@@ -1,0 +1,26 @@
+﻿@model WebApplication1.DTO.UpdateUserDTO;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+*@
+@{
+    User user = ViewBag.User != null ? ViewBag.User : null;
+
+}
+@if( user != null)
+{
+    <h1>Update User : @user.ID</h1>
+    
+    <form method="post" action="/update">
+        <input value="@user.ID" type="hidden"  name="id"/>
+        <label for="username">Username : </label>
+        <input class="form-control" value="@user.UserName" name="username" id="username" />
+        <br />
+        <label for="address">Address : </label>
+        <input class="form-control" name="address" id="address" value="@user.Address" />
+        
+
+        <input type="submit"/>
+    </form>
+}
+
